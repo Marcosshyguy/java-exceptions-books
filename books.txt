@@ -1,0 +1,2 @@
+Topolino,100,Pippo,Fummetti
+Promessi sposi,500,Manzoni,don abbondio

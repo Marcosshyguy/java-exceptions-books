@@ -1,10 +1,14 @@
 package org.exercise.java;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.FilterWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner input = new Scanner(System.in);
         String title = "";
         int pageNum = 0;
@@ -71,20 +75,56 @@ public class Main {
         }
 
 
+        input.close();
 
-        System.out.println(Arrays.toString(bookshelf));
 
-//        try {
-//            libro.setAuthor("dio");
-//        } catch (RuntimeException e) {
-//            e.printStackTrace();
-//        }
-//
-//        try {
-//            libro.setPageNumber(10);
-//        } catch (RuntimeException e) {
-//            e.printStackTrace();
-//        }
+        FileWriter writer = null;
+
+        try {
+            writer = new FileWriter("books.txt");
+            for (int i = 0; i < bookshelf.length; i++) {
+                Book book = bookshelf[i];
+                String writetitle = book.getTitle();
+                int writepageNum = book.getPageNumber();
+                String writeauthor = book.getAuthor();
+                String writepublisher = book.getPublisher();
+                String line = writetitle + "," + writepageNum + "," + writeauthor + "," + writepublisher + "\n";
+                writer.write(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        try {
+            File file = new File("books.txt");
+            Scanner scanner = new Scanner(file);
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] parts = line.split(",");
+                String readTitle = parts[0];
+                int readPageNum = Integer.parseInt(parts[1]);
+                String readAuthor = parts[2];
+                String readPublisher = parts[3];
+                System.out.println("Titolo: " + readTitle);
+                System.out.println("Numero di pagine: " + readPageNum);
+                System.out.println("Autore: " + readAuthor);
+                System.out.println("Editore: " + readPublisher);
+                System.out.println();
+            }
+
+            scanner.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 }
