@@ -2,7 +2,7 @@ package org.exercise.java;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.FilterWriter;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
